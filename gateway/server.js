@@ -15,10 +15,10 @@ app.use(cors({
 app.use(bodyParser.json());
 
 const serviceMap = {
-  python: "http://localhost:8001/run",
-  cpp: "http://localhost:8002/run",
-  java: "http://localhost:8003/run",
-  js: "http://localhost:8004/run",
+  python: "https://python-service-k920.onrender.com/run",
+  cpp: "https://cppservice.onrender.com/run",
+  java: "https://java-service-rtcm.onrender.com/run",
+  js: "https://js-service.onrender.com/run",
 };
 
 app.post("/run", async (req, res) => {
