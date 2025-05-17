@@ -26,7 +26,7 @@ async function runCppCode(code, input) {
   await fs.writeFile(inputPath, input || "");
 
   return new Promise((resolve, reject) => {
-    const cmd = `docker run --rm -v "${TEMP_DIR}:/app" cpp-runner sh -c "g++ /app/${codeFile} -o /app/code.out && /app/code.out < /app/${inputFile}"`;
+    const cmd = `g++ ${codePath} -o ${TEMP_DIR}/code_${fileId} && ${TEMP_DIR}/code_${fileId} < ${inputPath}`;
 
     exec(cmd, { timeout: 7000, maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
       fs.unlink(codePath).catch(() => {});
