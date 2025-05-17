@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 const TEMP_DIR = path.join(__dirname, "temp");
 
-fs.mkdir(TEMP_DIR, { recursive: true }).catch(console.log("check"));
+fs.mkdir(TEMP_DIR, { recursive: true }).catch(console.error);
 
 async function runPythonCode(code, input) {
   const fileName = `code_${crypto.randomBytes(8).toString("hex")}.py`;
@@ -25,7 +25,7 @@ async function runPythonCode(code, input) {
   await fs.writeFile(inputFilePath, input); 
 
   return new Promise((resolve, reject) => {
-    const cmd = `docker run --rm -v ${TEMP_DIR}:/app python:3.10-slim sh -c "python3 /app/${fileName} < /app/${inputFileName}"`;
+    const cmd = `python3 "${path.join(TEMP_DIR, fileName)}" < "${path.join(TEMP_DIR, inputFileName)}"`;
     console.log("Docker command:", cmd);
 
     exec(cmd, { timeout: 5000, maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
