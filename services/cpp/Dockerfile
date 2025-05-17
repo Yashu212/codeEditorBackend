@@ -2,6 +2,6 @@ FROM gcc:latest
 
 WORKDIR /app
 
-COPY temp /app
+RUN mkdir -p /app/temp
 
-CMD ["sh", "-c", "g++ code.cpp -o code && ./code < input.txt"]
+CMD ["sh", "-c", "g++ /app/temp/code.cpp -o /app/temp/code && /app/temp/code < /app/temp/input.txt"]
