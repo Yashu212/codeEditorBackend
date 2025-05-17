@@ -28,7 +28,7 @@ async function runJavaCode(code, input) {
   await fs.writeFile(path.join(requestDir, inputFile), input || "");
 
   return new Promise((resolve, reject) => {
-    const cmd = `docker run --rm -v "${requestDir}:/app" openjdk:17-slim sh -c "javac /app/${codeFile} && java -cp /app Main < /app/${inputFile}"`;
+    const cmd = `javac ${path.join(requestDir, codeFile)} && java -cp ${requestDir} Main < ${path.join(requestDir, inputFile)}`;
 
     exec(cmd, { timeout: 10000, maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
       fs.rm(requestDir, { recursive: true, force: true }).catch(() => {});

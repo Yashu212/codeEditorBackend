@@ -2,6 +2,16 @@ FROM openjdk:17-slim
 
 WORKDIR /app
 
-RUN mkdir -p /app/temp
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
-CMD ["sh"]
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 8003
+
+CMD ["node", "server.js"]
